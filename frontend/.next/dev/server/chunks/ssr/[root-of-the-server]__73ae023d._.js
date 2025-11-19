@@ -8,6 +8,8 @@ module.exports = mod;
 "[project]/app/page.tsx [app-ssr] (ecmascript)", ((__turbopack_context__) => {
 "use strict";
 
+// Updated page.tsx with fixed scroll physics
+// Soft-scroll: 1 slide per gesture, no hardscroll jumps
 __turbopack_context__.s([
     "default",
     ()=>Home
@@ -20,183 +22,171 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist
 function Home() {
     const [slides, setSlides] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])([]);
     const [current, setCurrent] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(0);
-    const containerRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRef"])(null);
-    const edgeReached = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRef"])(false);
-    const [narration, setNarration] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])("");
-    const [loadingNarration, setLoadingNarration] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
+    const [showMenu, setShowMenu] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
+    const [isUploading, setIsUploading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
+    const [uploadProgress, setUploadProgress] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(0);
+    const [fileName, setFileName] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])("");
+    const isTransitioning = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRef"])(false);
+    const scrollLocked = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRef"])(false);
     const touchStartY = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRef"])(null);
-    const touchEndY = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRef"])(null);
-    const lastScrollTime = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRef"])(0);
+    // Upload handler remains unchanged
     async function handleUpload(e) {
         const file = e.target.files?.[0];
         if (!file) return;
+        setFileName(file.name);
+        setIsUploading(true);
+        setUploadProgress(0);
         const formData = new FormData();
         formData.append("pdf", file);
-        const res = await fetch("/api/upload", {
-            method: "POST",
-            body: formData
-        });
-        const data = await res.json();
-        if (data.success) {
-            setSlides(data.slides);
-            setCurrent(0);
-        } else {
-            alert("Upload failed: " + data.error);
+        try {
+            const progressInterval = setInterval(()=>{
+                setUploadProgress((prev)=>{
+                    if (prev >= 90) return prev;
+                    return prev + Math.random() * 15;
+                });
+            }, 300);
+            const res = await fetch("/api/upload", {
+                method: "POST",
+                body: formData
+            });
+            clearInterval(progressInterval);
+            setUploadProgress(100);
+            const data = await res.json();
+            if (data.success) {
+                setTimeout(()=>{
+                    setSlides(data.slides);
+                    setCurrent(0);
+                    setShowMenu(false);
+                    setIsUploading(false);
+                    setUploadProgress(0);
+                }, 500);
+            } else {
+                alert("Upload failed: " + data.error);
+                setIsUploading(false);
+                setUploadProgress(0);
+            }
+        } catch  {
+            alert("Upload failed. Please try again.");
+            setIsUploading(false);
+            setUploadProgress(0);
         }
     }
-    // auto-fetch narration whenever slide changes
-    //   useEffect(() => {
-    //     if (slides.length === 0) return;
-    //     const fetchNarration = async () => {
-    //       setLoadingNarration(true);
-    //       setNarration("");
-    //       const res = await fetch("/api/narrate", {
-    //         method: "POST",
-    //         body: JSON.stringify({ text: slides[current].text }),
-    //         headers: { "Content-Type": "application/json" }
-    //       });
-    //       const data = await res.json();
-    //       if (data.success) {
-    //         setNarration(data.narration);
-    //       } else {
-    //         setNarration("(Narration unavailable)");
-    //       }
-    //       setLoadingNarration(false);
-    //     };
-    //     fetchNarration();
-    //   }, [current, slides]);
-    // mobile swipe
+    // Reset to home
+    function resetToHome() {
+        setSlides([]);
+        setCurrent(0);
+        setShowMenu(false);
+        setIsUploading(false);
+        setUploadProgress(0);
+        setFileName("");
+    }
+    // Transition lock
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
+        isTransitioning.current = true;
+        const timer = setTimeout(()=>isTransitioning.current = false, 450);
+        return ()=>clearTimeout(timer);
+    }, [
+        current
+    ]);
+    // MOBILE SWIPE
     function handleTouchStart(e) {
         touchStartY.current = e.touches[0].clientY;
     }
     function handleTouchEnd(e) {
-        touchEndY.current = e.changedTouches[0].clientY;
-        if (touchStartY.current == null || touchEndY.current == null) return;
-        const delta = touchStartY.current - touchEndY.current;
-        if (delta > 50 && current < slides.length - 1) setCurrent(current + 1);
-        if (delta < -50 && current > 0) setCurrent(current - 1);
+        const endY = e.changedTouches[0].clientY;
+        if (touchStartY.current == null) return;
+        const delta = touchStartY.current - endY;
         touchStartY.current = null;
-        touchEndY.current = null;
+        if (delta > 50 && current < slides.length - 1) setCurrent(current + 1);
+        else if (delta < -50 && current > 0) setCurrent(current - 1);
     }
-    // desktop scroll
+    // **NEW FIXED SCROLL PHYSICS**
+    // Prevents multiple slides skipping during fast trackpad scroll
     function handleWheel(e) {
-        const container = containerRef.current;
-        if (!container) return;
-        const now = Date.now();
-        const cooldown = 600; // ms between slide changes
-        // allow normal scrolling
-        const atTop = container.scrollTop <= 0;
-        const atBottom = container.scrollTop + container.clientHeight >= container.scrollHeight;
-        // if not at an edge, do nothing (let user scroll normally)
-        if (!atTop && !atBottom) {
-            edgeReached.current = false; // reset
-            return;
-        }
-        // reached an edge, but require a second scroll
-        if (!edgeReached.current) {
-            edgeReached.current = true;
-            lastScrollTime.current = now;
-            return; // don't change slide yet
-        }
-        // require cooldown AND second scroll
-        if (now - lastScrollTime.current < cooldown) return;
-        if (atBottom && e.deltaY > 0 && current < slides.length - 1) {
-            setCurrent(current + 1);
-        } else if (atTop && e.deltaY < 0 && current > 0) {
-            setCurrent(current - 1);
-        }
-        edgeReached.current = false;
-        lastScrollTime.current = now;
+        e.preventDefault();
+        if (scrollLocked.current || isTransitioning.current || showMenu) return;
+        scrollLocked.current = true;
+        setTimeout(()=>{
+            scrollLocked.current = false;
+        }, 650); // lock window
+        if (e.deltaY > 0 && current < slides.length - 1) setCurrent(current + 1);
+        else if (e.deltaY < 0 && current > 0) setCurrent(current - 1);
     }
-    // upload screen
+    // Keyboard navigation
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
+        function handleKeyDown(e) {
+            if (isTransitioning.current || showMenu) return;
+            if (e.key === "ArrowDown" && current < slides.length - 1) setCurrent(current + 1);
+            else if (e.key === "ArrowUp" && current > 0) setCurrent(current - 1);
+            else if (e.key === "Escape" && showMenu) setShowMenu(false);
+        }
+        if (slides.length > 0) {
+            window.addEventListener("keydown", handleKeyDown);
+            return ()=>window.removeEventListener("keydown", handleKeyDown);
+        }
+    }, [
+        current,
+        slides.length,
+        showMenu
+    ]);
+    // Upload screen (unchanged)
     if (slides.length === 0) {
         return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-            className: "h-screen flex flex-col items-center justify-center",
-            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
-                type: "file",
-                accept: "application/pdf",
-                onChange: handleUpload
-            }, void 0, false, {
-                fileName: "[project]/app/page.tsx",
-                lineNumber: 134,
-                columnNumber: 9
-            }, this)
+            style: {
+                position: "fixed",
+                inset: 0,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                background: "black"
+            }
         }, void 0, false, {
             fileName: "[project]/app/page.tsx",
-            lineNumber: 133,
+            lineNumber: 145,
             columnNumber: 7
         }, this);
     }
     const slide = slides[current];
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        className: "h-screen w-screen overflow-hidden bg-black text-white flex flex-col items-center justify-center",
+        style: {
+            position: "fixed",
+            inset: 0,
+            overflow: "hidden"
+        },
+        onWheel: handleWheel,
         onTouchStart: handleTouchStart,
         onTouchEnd: handleTouchEnd,
-        onWheel: handleWheel,
-        children: [
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                ref: containerRef,
-                className: "flex flex-col items-center justify-start transition-all duration-300 ease-out overflow-y-auto h-screen w-screen p-4",
-                children: [
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
-                        src: `data:image/png;base64,${slide.image_base64}`,
-                        className: "max-h-[70vh] object-contain rounded-lg"
-                    }, void 0, false, {
-                        fileName: "[project]/app/page.tsx",
-                        lineNumber: 154,
-                        columnNumber: 9
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                        className: "mt-4 text-center whitespace-pre-wrap text-sm px-4",
-                        children: slide.text
-                    }, void 0, false, {
-                        fileName: "[project]/app/page.tsx",
-                        lineNumber: 159,
-                        columnNumber: 9
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "mt-6 text-center text-sm opacity-80 px-4",
-                        children: loadingNarration ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                            children: "Generating narration..."
-                        }, void 0, false, {
-                            fileName: "[project]/app/page.tsx",
-                            lineNumber: 165,
-                            columnNumber: 13
-                        }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                            children: narration
-                        }, void 0, false, {
-                            fileName: "[project]/app/page.tsx",
-                            lineNumber: 167,
-                            columnNumber: 13
-                        }, this)
-                    }, void 0, false, {
-                        fileName: "[project]/app/page.tsx",
-                        lineNumber: 163,
-                        columnNumber: 9
-                    }, this)
-                ]
-            }, current, true, {
+        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+            style: {
+                position: "absolute",
+                inset: 0,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                padding: "5vh 4vw"
+            },
+            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
+                src: `data:image/png;base64,${slide.image_base64}`,
+                alt: "Slide ${slide.page}",
+                style: {
+                    maxWidth: "92vw",
+                    maxHeight: "85vh",
+                    objectFit: "contain",
+                    borderRadius: "1rem"
+                }
+            }, current, false, {
                 fileName: "[project]/app/page.tsx",
-                lineNumber: 148,
+                lineNumber: 179,
                 columnNumber: 9
-            }, this),
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "absolute bottom-4 opacity-70 text-xs",
-                children: [
-                    "Slide ",
-                    current + 1,
-                    " / ",
-                    slides.length
-                ]
-            }, void 0, true, {
-                fileName: "[project]/app/page.tsx",
-                lineNumber: 172,
-                columnNumber: 7
             }, this)
-        ]
-    }, void 0, true, {
+        }, void 0, false, {
+            fileName: "[project]/app/page.tsx",
+            lineNumber: 169,
+            columnNumber: 7
+        }, this)
+    }, void 0, false, {
         fileName: "[project]/app/page.tsx",
-        lineNumber: 142,
+        lineNumber: 161,
         columnNumber: 5
     }, this);
 }
